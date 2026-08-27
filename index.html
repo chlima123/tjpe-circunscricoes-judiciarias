@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circunscrições Judiciárias do TJPE — Atlas das Comarcas e Termos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300&family=Source+Sans+3:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F0E4;
+  --paper-2:#EDE6D2;
+  --ink:#24352C;
+  --ink-soft:#5C6C60;
+  --copper:#AE5230;
+  --copper-soft:#C87A4F;
+  --river:#44607E;
+  --gold:#9A7A32;
+  --line:rgba(36,53,44,.16);
+  --display:'Fraunces',serif;
+  --body:'Source Sans 3',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:radial-gradient(1200px 620px at 82% -12%, rgba(176,82,48,.07), transparent 62%),var(--paper);color:var(--ink);font-family:var(--body);line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection{background:var(--copper);color:#fff}
+a{color:inherit}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+.hero{padding:66px 0 40px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--copper);display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:46px;height:1px;background:var(--copper)}
+h1{font-family:var(--display);font-weight:300;font-size:clamp(36px,5.6vw,66px);line-height:1.04;letter-spacing:-.012em;max-width:22ch;margin:22px 0 16px}
+h1 em{font-style:italic;color:var(--copper)}
+.hero p{max-width:60ch;color:var(--ink-soft);font-size:17px;font-weight:300}
+.fonte{margin-top:24px;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+.fonte a{color:var(--river);text-decoration:none;border-bottom:1px dotted var(--river)}
+.fonte a:hover{color:var(--copper);border-color:var(--copper)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:46px 0}
+.stat{background:var(--paper);padding:24px 28px}
+.stat .n{font-family:var(--display);font-weight:300;font-size:46px;line-height:1;color:var(--copper)}
+.stat .l{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-top:9px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:58px 0 26px}
+.sec-head h2{font-family:var(--display);font-weight:600;font-size:27px;letter-spacing:-.01em}
+.sec-head h2 span{font-weight:300;color:var(--ink-soft)}
+.sec-head .count{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px}
+.filters button{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:transparent;border:1px solid var(--line);color:var(--ink-soft);padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s}
+.filters button:hover{border-color:var(--copper);color:var(--copper)}
+.filters button.ativa{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{position:relative;background:var(--paper);border:1px solid var(--line);padding:22px 22px 18px;cursor:pointer;overflow:hidden;transition:.18s;display:flex;flex-direction:column;gap:10px;text-align:left}
+.card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--copper);transform:scaleY(0);transform-origin:top;transition:transform .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--copper-soft);box-shadow:0 16px 32px -20px rgba(36,53,44,.55)}
+.card:hover::after{transform:scaleY(1)}
+.card.hide{display:none}
+.card .rom{position:absolute;right:12px;top:8px;font-family:var(--display);font-weight:300;font-size:52px;line-height:1;color:rgba(176,82,48,.16);transition:.18s;z-index:0}
+.card:hover .rom{color:rgba(176,82,48,.45)}
+.card .sede{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:-.01em;position:relative;z-index:1}
+.card .sede::before{content:"Sede · ";display:block;margin-bottom:3px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:300;color:var(--ink-soft)}
+.card .meta{display:flex;gap:16px;font-family:var(--mono);font-size:11px;color:var(--ink-soft);position:relative;z-index:1}
+.card .meta b{color:var(--river);font-weight:500}
+.card .reg{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);position:relative;z-index:1}
+.detail{position:fixed;inset:0;background:rgba(36,53,44,.55);backdrop-filter:blur(3px);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.detail.ativo{display:flex}
+.painel{background:var(--paper);width:100%;max-width:780px;max-height:88vh;overflow-y:auto;border-top:1px solid var(--line);padding:44px 48px 40px;position:relative;animation:sobe .28s ease}
+@keyframes sobe{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+.fechar{position:absolute;top:18px;right:22px;background:transparent;border:none;font-family:var(--mono);font-size:26px;color:var(--ink-soft);cursor:pointer;line-height:1}
+.fechar:hover{color:var(--copper)}
+.filete{width:64px;height:3px;background:var(--copper);margin-bottom:22px}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--copper)}
+.painel h3{font-family:var(--display);font-weight:300;font-size:clamp(30px,6vw,46px);line-height:1.05;margin:10px 0 4px}
+.painel h3 .romm{font-style:italic;color:var(--copper)}
+.sede-linha{font-family:var(--mono);font-size:13px;color:var(--ink-soft);margin:2px 0 6px}
+.sede-linha b{color:var(--ink);font-weight:500}
+.painel .reg-tag{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:26px}
+.secao{margin-top:26px}
+.secao .tit{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:13px}
+.secao .tit::after{content:"";flex:1;height:1px;background:var(--line)}
+.secao .tit b{color:var(--river);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--body);font-size:14px;padding:6px 13px;border:1px solid var(--line);border-radius:2px;background:var(--paper-2);color:var(--ink)}
+.chip.termo{background:rgba(154,122,50,.14);border-color:rgba(154,122,50,.4);color:#6f5a24}
+.vazio{font-family:var(--mono);font-size:12px;color:var(--ink-soft);font-style:italic}
+.navbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:36px;padding-top:22px;border-top:1px solid var(--line)}
+.navbar button{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:none;padding:12px 20px;cursor:pointer;transition:.15s}
+.navbar button:hover{background:var(--copper)}
+.navbar button:disabled{opacity:.35;cursor:default}
+.navbar button:disabled:hover{background:var(--ink)}
+.navbar .pos{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+footer{margin-top:72px;padding:30px 0 46px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.08em}
+footer .fila{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:600px){.stats{grid-template-columns:1fr}.painel{padding:38px 24px 32px}.wrap{padding:0 18px}.hero{padding:60px 0 32px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card:hover{transform:none}}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Poder Judiciário de Pernambuco</div>
+    <h1>Circunscrições <em>Judiciárias</em> do TJPE</h1>
+    <p>Atlas navegável das 20 circunscrições do Tribunal de Justiça de Pernambuco — relação completa das comarcas e dos termos judiciários, organizada por sedes e regiões do estado.</p>
+    <div class="fonte">Fonte: <a href="https://portal.tjpe.jus.br/documents/72348/118204/Mapa+das+20+Circunscri%C3%A7%C3%B5es+Judici%C3%A1rias+-+com+Rela%C3%A7%C3%A3o+das+Comarcas+e+Termos_29.02.2016.pdf" target="_blank" rel="noopener">Mapa das 20 Circunscrições Judiciárias — Relação das Comarcas e Termos (PDF, TJPE, 29.02.2016)</a></div>
+  </div>
+</header>
+<main class="wrap">
+  <div class="stats">
+    <div class="stat"><div class="n">20</div><div class="l">Circunscrições</div></div>
+    <div class="stat"><div class="n">151</div><div class="l">Comarcas</div></div>
+    <div class="stat"><div class="n">33</div><div class="l">Termos Judiciários</div></div>
+  </div>
+  <div class="sec-head">
+    <h2>Índice das <span>Circunscrições</span></h2>
+    <div class="count" id="visCount"></div>
+  </div>
+  <div class="filters" id="filters">
+    <button data-r="todas" class="ativa">Todas</button>
+    <button data-r="Litoral e Mata">Litoral e Mata</button>
+    <button data-r="Agreste">Agreste</button>
+    <button data-r="Sertão">Sertão</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>
+  <div class="wrap fila">
+    <span>Circunscrições Judiciárias do TJPE</span>
+    <span>Fonte: TJPE · 29.02.2016 · Atlas navegável</span>
+  </div>
+</footer>
+<div class="detail" id="detail" role="dialog" aria-modal="true" aria-label="Detalhe da circunscrição">
+  <div class="painel">
+    <button class="fechar" id="fechar" aria-label="Fechar">×</button>
+    <div class="filete"></div>
+    <div class="kicker" id="dKick"></div>
+    <h3 id="dTitulo"></h3>
+    <div class="sede-linha" id="dSede"></div>
+    <div class="reg-tag" id="dReg"></div>
+    <div class="secao">
+      <div class="tit"><span>Comarcas</span><b id="dComCount"></b></div>
+      <div class="chips" id="dCom"></div>
+    </div>
+    <div class="secao">
+      <div class="tit"><span>Termos Judiciários</span><b id="dTermCount"></b></div>
+      <div class="chips" id="dTerm"></div>
+    </div>
+    <div class="navbar">
+      <button id="prev">‹ Anterior</button>
+      <span class="pos" id="pos"></span>
+      <button id="next">Próxima ›</button>
+    </div>
+  </div>
+</div>
+<script>
+var REG=["Litoral e Mata", "Agreste", "Sertão"];
+var CIRC=[{"rom": "I", "ar": "1ª", "sede": "Recife", "reg": 0, "com": ["Abreu e Lima", "Camaragibe", "Jaboatão dos Guararapes", "Moreno", "Olinda", "Paulista", "Recife", "São Lourenço da Mata"], "term": []}, {"rom": "II", "ar": "2ª", "sede": "Cabo de Santo Agostinho", "reg": 0, "com": ["Cabo de Santo Agostinho", "Ipojuca"], "term": []}, {"rom": "III", "ar": "3ª", "sede": "Igarassu", "reg": 0, "com": ["Igarassu", "Itamaracá", "Itapissuma"], "term": ["Araçoiaba"]}, {"rom": "IV", "ar": "4ª", "sede": "Vitória de Santo Antão", "reg": 0, "com": ["Chã Grande", "Glória de Goitá", "Pombos", "Vitória de Santo Antão"], "term": ["Chã de Alegria"]}, {"rom": "V", "ar": "5ª", "sede": "Goiana", "reg": 0, "com": ["Aliança", "Buenos Aires", "Carpina", "Condado", "Ferreiros", "Goiana", "Itambé", "Itaquitinga", "Lagoa de Itaenga", "Macaparana", "Nazaré da Mata", "Paudalho", "Timbaúba", "Tracunhaém", "Vicência"], "term": ["Lagoa do Carro", "Camutanga"]}, {"rom": "VI", "ar": "6ª", "sede": "Palmares", "reg": 0, "com": ["Água Preta", "Amaraji", "Barreiros", "Belém de Maria", "Catende", "Cortês", "Escada", "Gameleira", "Joaquim Nabuco", "Maraial", "Palmares", "Primavera", "Quipapá", "Ribeirão", "Rio Formoso", "São José da Coroa Grande", "Sirinhaém", "Tamandaré"], "term": ["Xexéu", "Jaqueira", "São Benedito do Sul"]}, {"rom": "VII", "ar": "7ª", "sede": "Caruaru", "reg": 1, "com": ["Alagoinha", "Belo Jardim", "Bezerros", "Brejo da Madre de Deus", "Cachoeirinha", "Caruaru", "Gravatá", "Jataúba", "Pesqueira", "Poção", "Riacho das Almas", "Sanharó", "São Bento do Una", "São Caetano", "Tacaimbó"], "term": []}, {"rom": "VIII", "ar": "8ª", "sede": "Bonito", "reg": 1, "com": ["Agrestina", "Altinho", "Bonito", "Camocim de São Félix", "Cupira", "Ibirajuba", "Lagoa dos Gatos", "Panelas", "Sairé", "São Joaquim do Monte"], "term": ["Barra de Guabiraba"]}, {"rom": "IX", "ar": "9ª", "sede": "Limoeiro", "reg": 1, "com": ["Bom Jardim", "Cumaru", "Feira Nova", "João Alfredo", "Limoeiro", "Orobó", "Passira", "São Vicente Ferrer"], "term": ["Machados", "Salgadinho"]}, {"rom": "X", "ar": "10ª", "sede": "Garanhuns", "reg": 1, "com": ["Angelim", "Bom Conselho", "Brejão", "Caetés", "Calçado", "Canhotinho", "Capoeiras", "Correntes", "Garanhuns", "Iati", "Jupi", "Jurema", "Lagoa do Ouro", "Lajedo", "Palmeirina", "Saloá", "São João"], "term": ["Terezinha", "Jucati", "Paranatama"]}, {"rom": "XI", "ar": "11ª", "sede": "Surubim", "reg": 1, "com": ["Santa Maria do Cambucá", "Surubim", "Vertentes"], "term": ["Frei Miguelinho", "Casinhas", "Vertente do Lério"]}, {"rom": "XII", "ar": "12ª", "sede": "Buíque", "reg": 2, "com": ["Águas Belas", "Buíque", "Itaíba", "Pedra", "Tupanatinga", "Venturosa"], "term": []}, {"rom": "XIII", "ar": "13ª", "sede": "Afogados da Ingazeira", "reg": 2, "com": ["Afogados da Ingazeira", "Itapetim", "São José do Egito", "Tabira", "Tuparetama"], "term": ["Iguaraci", "Brejinho", "Santa Terezinha", "Solidão", "Ingazeira"]}, {"rom": "XIV", "ar": "14ª", "sede": "Arcoverde", "reg": 2, "com": ["Arcoverde", "Betânia", "Custódia", "Ibimirim", "Inajá", "Sertânia"], "term": ["Manari"]}, {"rom": "XV", "ar": "15ª", "sede": "Salgueiro", "reg": 2, "com": ["Mirandiba", "Parnamirim", "Salgueiro", "São José do Belmonte", "Serrita", "Terra Nova", "Verdejante"], "term": ["Cedro"]}, {"rom": "XVI", "ar": "16ª", "sede": "Floresta", "reg": 2, "com": ["Belém de São Francisco", "Floresta", "Petrolândia", "Tacaratu"], "term": ["Itacuruba", "Carnaubeira da Penha", "Jatobá"]}, {"rom": "XVII", "ar": "17ª", "sede": "Araripina", "reg": 2, "com": ["Araripina", "Bodocó", "Exu", "Ipubi", "Moreilândia", "Ouricuri", "Trindade"], "term": ["Granito", "Santa Cruz", "Santa Filomena"]}, {"rom": "XVIII", "ar": "18ª", "sede": "Petrolina", "reg": 2, "com": ["Afrânio", "Cabrobó", "Lagoa Grande", "Orocó", "Petrolina", "Santa Maria da Boa Vista"], "term": ["Dormentes"]}, {"rom": "XIX", "ar": "19ª", "sede": "Santa Cruz do Capibaribe", "reg": 1, "com": ["Santa Cruz do Capibaribe", "Taquaritinga do Norte", "Toritama"], "term": []}, {"rom": "XX", "ar": "20ª", "sede": "Serra Talhada", "reg": 2, "com": ["Carnaíba", "Flores", "Serra Talhada", "Triunfo"], "term": ["Quixaba", "Calumbi", "Santa Cruz da Baixa Verde"]}];
+
+var filtro="todas", sel=0;
+
+function seqVis(){
+  var s=[];
+  for(var i=0;i<CIRC.length;i++){ if(filtro==="todas"||REG.indexOf(filtro)===CIRC[i].reg) s.push(i); }
+  return s;
+}
+function renderGrid(){
+  var grid=document.getElementById('grid'); grid.innerHTML='';
+  var vis=seqVis();
+  CIRC.forEach(function(c,i){
+    var ok=filtro==="todas"||REG.indexOf(filtro)===c.reg;
+    var el=document.createElement('button');
+    el.className='card'+(ok?'':' hide');
+    el.setAttribute('aria-label','Ver detalhes da '+c.ar+' circunscrição, sede '+c.sede);
+    el.innerHTML='<span class="rom">'+c.rom+'</span><span class="sede">'+c.sede+'</span><span class="reg">'+REG[c.reg]+'</span><span class="meta"><span><b>'+c.com.length+'</b> comarcas</span><span><b>'+(c.term.length||'—')+'</b> termos</span></span>';
+    el.onclick=(function(i){return function(){abrir(i)}})(i);
+    grid.appendChild(el);
+  });
+  document.getElementById('visCount').textContent='Mostrando '+vis.length+' de '+CIRC.length+' circunscrições';
+}
+function abrir(i){
+  sel=i; var c=CIRC[i];
+  document.getElementById('dKick').textContent='Circunscrição '+c.ar+' · Pernambuco';
+  document.getElementById('dTitulo').innerHTML='<span class="romm">'+c.rom+'</span> · '+c.sede;
+  document.getElementById('dSede').innerHTML='Sede: <b>'+c.sede+'</b>';
+  document.getElementById('dReg').textContent=REG[c.reg];
+  var cc=document.getElementById('dCom'); cc.innerHTML='';
+  if(c.com.length===0){cc.innerHTML='<span class="vazio">Sem comarcas registradas</span>';}
+  else c.com.forEach(function(n){var s=document.createElement('span');s.className='chip';s.textContent=n;cc.appendChild(s)});
+  document.getElementById('dComCount').textContent=c.com.length;
+  var tt=document.getElementById('dTerm'); tt.innerHTML='';
+  if(c.term.length===0){tt.innerHTML='<span class="vazio">Sem termos judiciários</span>';}
+  else c.term.forEach(function(n){var s=document.createElement('span');s.className='chip termo';s.textContent=n;tt.appendChild(s)});
+  document.getElementById('dTermCount').textContent=c.term.length;
+  var seq=seqVis(); var p=seq.indexOf(i);
+  document.getElementById('pos').textContent=(p+1)+' / '+seq.length;
+  document.getElementById('detail').classList.add('ativo');
+}
+function fechar(){document.getElementById('detail').classList.remove('ativo')}
+function mover(d){
+  var seq=seqVis(); var idx=seq.indexOf(sel);
+  var n=(idx+d+seq.length)%seq.length;
+  abrir(seq[n]);
+}
+document.getElementById('fechar').onclick=fechar;
+document.getElementById('prev').onclick=function(){mover(-1)};
+document.getElementById('next').onclick=function(){mover(1)};
+document.getElementById('detail').addEventListener('click',function(e){if(e.target===this)fechar()});
+document.addEventListener('keydown',function(e){
+  if(!document.getElementById('detail').classList.contains('ativo'))return;
+  if(e.key==='Escape')fechar();
+  if(e.key==='ArrowLeft')mover(-1);
+  if(e.key==='ArrowRight')mover(1);
+});
+var filtros=document.querySelectorAll('#filters button');
+filtros.forEach(function(b){
+  b.addEventListener('click',function(){
+    filtros.forEach(function(x){x.classList.remove('ativa')});
+    b.classList.add('ativa');
+    filtro=b.getAttribute('data-r');
+    renderGrid();
+  });
+});
+renderGrid();
+</script>
+</body>
+</html>
